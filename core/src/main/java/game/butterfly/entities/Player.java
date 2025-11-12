@@ -31,7 +31,8 @@ public class Player {
             walkAnimations[i] = new Animation<>(0.15f, frames[i]);
         }
 
-        position = new Vector2(400, 300);
+        //pra começar no meio, mudar caso mude tamanho do mapa
+        position = new Vector2(960 / 2f, 960 / 2f);
         currentFrame = frames[0][0];
         stateTime = 0f;
     }
