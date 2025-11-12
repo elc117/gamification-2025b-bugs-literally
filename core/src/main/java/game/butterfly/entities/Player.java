@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Player {
@@ -19,6 +20,7 @@ public class Player {
     private TextureRegion currentFrame;
     private float stateTime;
     private int currentDirection = 0;
+    private Rectangle bounds;//colisõess
 
     public Player() {
         spriteSheet = new Texture("spriteteste.png");
@@ -35,6 +37,11 @@ public class Player {
         position = new Vector2(960 / 2f, 960 / 2f);
         currentFrame = frames[0][0];
         stateTime = 0f;
+
+        // define a area de colisão com base no tamanho do frame
+        bounds = new Rectangle(position.x, position.y,
+            spriteSheet.getWidth() / 4f,
+            spriteSheet.getHeight() / 4f);
     }
 
     // atualmente esta 0=baixo, 1=direita, 2=esquerda, 3=cima
@@ -68,6 +75,7 @@ public class Player {
         } else {
             currentFrame = frames[currentDirection][0];
         }
+        bounds.setPosition(position.x, position.y);
     }
 
     public void render(SpriteBatch batch) {
@@ -76,6 +84,10 @@ public class Player {
 
     public Vector2 getPosition() {
         return position;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
     }
 
     public void dispose() {
