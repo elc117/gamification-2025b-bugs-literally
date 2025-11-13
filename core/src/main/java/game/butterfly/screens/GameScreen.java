@@ -5,10 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import game.butterfly.MainGame;
 import game.butterfly.entities.Player;
-import game.butterfly.world.Map;
+import game.butterfly.Map;
 import game.butterfly.entities.Butterfly;
 import com.badlogic.gdx.utils.Array;
+import game.butterfly.quiz.Question;
+import game.butterfly.quiz.QuestionManager;
+
 
 public class GameScreen implements Screen {
 
@@ -17,22 +21,25 @@ public class GameScreen implements Screen {
     private Player player;
     private Map map;
     private Array<Butterfly> butterflies;
+    private QuestionManager questionManager = new QuestionManager();
+    private MainGame game;
 
 
     // define o tamanho do mapa em pixels, mudar caso mude o tamanho, testei com 1024 mas tava passando do limite (?)
     private static final float MAP_WIDTH = 960;
     private static final float MAP_HEIGHT = 960;
 
-    @Override
-    public void show() {
-        batch = new SpriteBatch();
-        player = new Player();
-        map = new Map();
+    public GameScreen(MainGame mainGame) {
+        this.game = mainGame;
+        //
+        this.batch = new SpriteBatch();
+        this.player = new Player();
+        this.map = new Map();
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        //adicionar borboletas, teste por enquanto com o msm png pra todas
+        //tirei do show pois estavam aparecendo dps de coletadas
         butterflies = new Array<>();
 
         butterflies.add(new Butterfly("um", 100, 100, "butterfly.png"));
@@ -44,6 +51,16 @@ public class GameScreen implements Screen {
         butterflies.add(new Butterfly("sete", 600, 800, "butterfly.png"));
         butterflies.add(new Butterfly("oito", 900, 400, "butterfly.png"));
         butterflies.add(new Butterfly("nove", 500, 900, "butterfly.png"));
+    }
+
+    @Override
+    public void show() {
+        batch = new SpriteBatch();
+        player = new Player();
+        map = new Map();
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     }
 
@@ -62,37 +79,33 @@ public class GameScreen implements Screen {
 
         camera.update();
 
-        ScreenUtils.clear(1f, 0.75f, 0.8f, 1); //pinta o fundo de rosinha claro
+        ScreenUtils.clear(0f, 0f, 0f, 1); // preto agora
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         map.render(batch);
         player.render(batch);
 
-        // desenha as borboletas
+        // desenha e verifica se ja foi coletada tbm
         for (Butterfly b : butterflies) {
-            b.render(batch);
+            if (!b.isCollected()) {
+                b.render(batch);
+            }
         }
-
         checkButterflyCollision();
 
         batch.end();
 
-}
+    }
     private void checkButterflyCollision() {
-        Array<Butterfly> toRemove = new Array<>();
-
         for (Butterfly b : butterflies) {
             if (!b.isCollected() && player.getBounds().overlaps(b.getBounds())) {
-                System.out.println("pegou a borboleta: " + b.getName());
-                b.collect();
-                toRemove.add(b);
+                Question question = questionManager.getQuestionForButterfly(b.getName());
+                game.setScreen(new QuizScreen(game, this, b, question));
+                break;
             }
         }
-
-        butterflies.removeAll(toRemove, true);
     }
-
 
     @Override
     public void resize(int width, int height) {

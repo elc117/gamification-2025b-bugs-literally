@@ -46,7 +46,7 @@ public class Butterfly {
     }
 
     public void collect() {
-        collected = true;
+        this.collected = true;
     }
 
     public void dispose() {
