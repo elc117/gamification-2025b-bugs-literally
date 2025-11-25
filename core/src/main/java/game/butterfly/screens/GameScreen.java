@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.ScreenUtils;
 import game.butterfly.MainGame;
 import game.butterfly.entities.Player;
@@ -17,6 +18,8 @@ import game.butterfly.quiz.QuestionManager;
 public class GameScreen implements Screen {
 
     private OrthographicCamera camera;
+    private OrthographicCamera hudCamera;
+
     private SpriteBatch batch;
     private Player player;
     private Map map;
@@ -24,8 +27,10 @@ public class GameScreen implements Screen {
     private QuestionManager questionManager = new QuestionManager();
     private MainGame game;
 
-    private static final float MAP_WIDTH = 960;
-    private static final float MAP_HEIGHT = 960;
+    private BitmapFont font;
+
+    private static final float MAP_WIDTH = 1600;
+    private static final float MAP_HEIGHT = 1249;
 
     public GameScreen(MainGame mainGame) {
         this.game = mainGame;
@@ -33,19 +38,28 @@ public class GameScreen implements Screen {
         this.batch = new SpriteBatch();
         this.player = new Player();
         this.map = new Map();
+
+        // câmera principal (segue player)
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        // câmera HUD fixa
+        this.hudCamera = new OrthographicCamera();
+        this.hudCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        this.font = new BitmapFont();
+        this.font.getData().setScale(2f);
+
         butterflies = new Array<>();
-        butterflies.add(new Butterfly("um", 100, 100, "butterfly.png"));
-        butterflies.add(new Butterfly("dois", 400, 200, "butterfly.png"));
-        butterflies.add(new Butterfly("tres", 700, 300, "butterfly.png"));
-        butterflies.add(new Butterfly("quatro", 200, 500, "butterfly.png"));
-        butterflies.add(new Butterfly("cinco", 800, 600, "butterfly.png"));
-        butterflies.add(new Butterfly("seis", 300, 700, "butterfly.png"));
-        butterflies.add(new Butterfly("sete", 600, 800, "butterfly.png"));
-        butterflies.add(new Butterfly("oito", 900, 400, "butterfly.png"));
-        butterflies.add(new Butterfly("nove", 500, 900, "butterfly.png"));
+        butterflies.add(new Butterfly("janeira", 600, 350, "butterflies/janeira.png"));
+        butterflies.add(new Butterfly("gema", 1100, 330, "butterflies/gema.png"));
+        butterflies.add(new Butterfly("caixao", 700, 500, "butterflies/caixao.png"));
+        butterflies.add(new Butterfly("morpho", 750, 850, "butterflies/morpho.png"));
+        butterflies.add(new Butterfly("azulao", 800, 750, "butterflies/azulao.png"));
+        butterflies.add(new Butterfly("viuvinha", 450, 700, "butterflies/viuvinha.png"));
+        butterflies.add(new Butterfly("monarca", 1100, 800, "butterflies/monarca.png"));
+        butterflies.add(new Butterfly("maria", 930, 550, "butterflies/maria.png"));
+        butterflies.add(new Butterfly("oito", 500, 900, "butterflies/oito.png"));
     }
 
     @Override
@@ -54,7 +68,6 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        //abre o inventario
         if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
             game.setScreen(new InventoryScreen(game, this, butterflies));
             return;
@@ -86,6 +99,34 @@ public class GameScreen implements Screen {
         checkButterflyCollision();
 
         batch.end();
+
+        hudCamera.update();
+        batch.setProjectionMatrix(hudCamera.combined);
+        batch.begin();
+
+        font.draw(batch,
+            "Insetário (I)",
+            Gdx.graphics.getWidth() - 160,
+            Gdx.graphics.getHeight() - 10
+        );
+
+        boolean allCollected = true;
+        for (Butterfly b : butterflies) {
+            if (!b.isCollected()) {
+                allCollected = false;
+                break;
+            }
+        }
+
+        if (allCollected) {
+            font.draw(batch,
+                "Parabéns, todas borboletas coletadas!",
+                20,
+                Gdx.graphics.getHeight() - 430
+            );
+        }
+
+        batch.end();
     }
 
     private void checkButterflyCollision() {
@@ -101,6 +142,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         camera.setToOrtho(false, width, height);
+        hudCamera.setToOrtho(false, width, height);
     }
 
     @Override public void pause() {}
@@ -112,5 +154,6 @@ public class GameScreen implements Screen {
         batch.dispose();
         player.dispose();
         map.dispose();
+        font.dispose();
     }
 }

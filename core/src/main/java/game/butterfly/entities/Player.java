@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.TimeUtils;
 
 public class Player {
 
@@ -20,61 +19,70 @@ public class Player {
     private TextureRegion currentFrame;
     private float stateTime;
     private int currentDirection = 0;
-    private Rectangle bounds;//colisõess
+    private Rectangle bounds;
+
+    // LIMITES DO MAPA
+    private float minX = 350;
+    private float minY = 300;
+    private float maxX = 1250;
+    private float maxY = 949;
 
     public Player() {
         spriteSheet = new Texture("spriteteste.png");
         frames = TextureRegion.split(spriteSheet,
             spriteSheet.getWidth() / 4,
-            spriteSheet.getHeight() / 4); //4x4 se mudar, trocar aqui
+            spriteSheet.getHeight() / 4);
 
         walkAnimations = new Animation[4];
         for (int i = 0; i < 4; i++) {
             walkAnimations[i] = new Animation<>(0.15f, frames[i]);
         }
 
-        //pra começar no meio, mudar caso mude tamanho do mapa
-        position = new Vector2(960 / 2f, 960 / 2f);
+        position = new Vector2(1536 / 2f, 1024 / 2f);
         currentFrame = frames[0][0];
         stateTime = 0f;
 
-        // define a area de colisão com base no tamanho do frame
-        bounds = new Rectangle(position.x, position.y,
+        bounds = new Rectangle(
+            position.x,
+            position.y,
             spriteSheet.getWidth() / 4f,
-            spriteSheet.getHeight() / 4f);
+            spriteSheet.getHeight() / 4f
+        );
     }
 
-    // atualmente esta 0=baixo, 1=direita, 2=esquerda, 3=cima
     public void update(float delta) {
         stateTime += delta;
         boolean moving = false;
 
-        //quando mudar o sprite, se for diferente as direções TROCAR
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             position.y += speed * delta;
-            currentDirection = 3; // cima
+            currentDirection = 3;
             moving = true;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             position.y -= speed * delta;
-            currentDirection = 0; // baixo
+            currentDirection = 0;
             moving = true;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             position.x -= speed * delta;
-            currentDirection = 1; // esquerda
+            currentDirection = 1;
             moving = true;
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             position.x += speed * delta;
-            currentDirection = 2; // direita
+            currentDirection = 2;
             moving = true;
         }
+
+        position.x = Math.max(minX, Math.min(position.x, maxX - bounds.width));
+        position.y = Math.max(minY, Math.min(position.y, maxY - bounds.height));
 
         if (moving) {
             currentFrame = walkAnimations[currentDirection].getKeyFrame(stateTime, true);
         } else {
             currentFrame = frames[currentDirection][0];
         }
+
         bounds.setPosition(position.x, position.y);
     }
 

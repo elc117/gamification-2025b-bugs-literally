@@ -8,7 +8,7 @@ public class Map {
     private Texture texture;
 
     public Map() {
-        texture = new Texture("testeemapa.png");
+        texture = new Texture("gamemap.png");
     }
 
     public void render(SpriteBatch batch) {

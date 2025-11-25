@@ -1,12 +1,12 @@
 package game.butterfly;
 
 import com.badlogic.gdx.Game;
-import game.butterfly.screens.GameScreen;
+import game.butterfly.screens.MenuScreen;
 
 public class MainGame extends Game {
 
     @Override
     public void create() {
-        setScreen(new GameScreen(this));
+        setScreen(new MenuScreen(this));
     }
 }
