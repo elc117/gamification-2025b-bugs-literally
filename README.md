@@ -25,10 +25,19 @@
 
 ## Orientações para execução:
 
+Ter JDK instalado.
+
+No terminal, usar o comando:
+
+./gradlew lwjgl3:run
 
 ---
 
 ## Resultado final:
+
+
+https://github.com/user-attachments/assets/2b1131be-d4cc-4af8-ba10-1a3944ca21ba
+
 
 
 
