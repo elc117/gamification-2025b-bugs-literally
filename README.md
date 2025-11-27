@@ -69,9 +69,11 @@ OBS: aumentei a velociade do vídeo em 1.5, para melhor demonstração.
 
 ---
 
-## Referências e créditos (e prompts):
+## Referências e créditos:
 
 CRÉDITOS:
+-
+
 https://www.deviantart.com/boonzeet - Sprite sheet de uso público
 
 https://www.ufsm.br/midias/arco/10-borboletas-comuns-no-rio-grande-do-sul-que-voce-vai-adorar-conhecer - Artigo da UFSM consultado e fotos da maioria das borboletas.
@@ -84,6 +86,7 @@ Pinterest - Vi inspirações para estética e escolhi a paleta de cores.
 
 
 REFERÊNCIAS:
+-
 
 https://github.com/elc117/game-2024b-vmferreira - Analisando o código, consegui compreender bem como funciona um projeto no libGDX.
 
