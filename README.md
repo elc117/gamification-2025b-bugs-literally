@@ -63,9 +63,9 @@ No terminal, usar o comando:
 
 ## Resultado final:
 
+https://github.com/user-attachments/assets/6260eb68-8138-479f-927a-d671680e7a2d
 
-https://github.com/user-attachments/assets/2b1131be-d4cc-4af8-ba10-1a3944ca21ba
-
+OBS: aumentei a velociade do vídeo em 1.5, para melhor demonstração.
 
 ---
 
