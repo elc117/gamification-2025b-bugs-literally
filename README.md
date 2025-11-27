@@ -38,19 +38,22 @@ Para o desenvolvimento, dividi o projeto em várias partes menores, assim ficou 
 
 PROBLEMAS: 
 
-Tive problemas com a ferramenta Gradle, pois por algum motivo que não consegui corrigir, a versão HTML não foi gerada. Suponho que o motivo seja a versão que utilizei do Java (17), pois após pesquisar as possíveis causas, essa foi citada diversas vezes. 
+Tive problemas com a ferramenta Gradle, pois por algum motivo que não consegui corrigir, a versão HTML não foi gerada. Suponho que o motivo seja a versão que utilizei do Java, pois após pesquisar as possíveis causas, essa foi citada diversas vezes. Ainda não consegui postar no itch.io por conta disso.
 
 
 
 ---
 
 ## Diagrama de classes:
+<img width="769" height="920" alt="ClassDiagram" src="https://github.com/user-attachments/assets/5258c783-4751-4388-a165-129754191f52" />
+
+Primeiro tentei gerar automaticamaente mas estava usando várias classes externas e deixando o diagrama confuso. Fiz esse no PlantUML apenas com as classes criadas no core. Ao ver o diagrama, notei que eu poderia ter utilizado mais relacionamentos entre as classes, como por exemplo, herança com uma classe abstrata Entity, mas acabei perdendo essa oportunidade.
 
 ---
 
 ## Orientações para execução:
 
-Ter JDK instalado.
+Ter JDK instalado
 
 No terminal, usar o comando:
 
