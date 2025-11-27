@@ -67,13 +67,37 @@ No terminal, usar o comando:
 https://github.com/user-attachments/assets/2b1131be-d4cc-4af8-ba10-1a3944ca21ba
 
 
-
-
 ---
 
 ## Referências e créditos (e prompts):
 
+CRÉDITOS:
+https://www.deviantart.com/boonzeet - Sprite sheet de uso público
 
+https://www.ufsm.br/midias/arco/10-borboletas-comuns-no-rio-grande-do-sul-que-voce-vai-adorar-conhecer - Artigo da UFSM consultado e fotos da maioria das borboletas.
+
+Chatgpt - Gerou as ideias de questões baseadas no artigo(foram revisadas e modificadas).
+
+Gemini - Mapa, botão de start, capa do jogo, título. 
+
+Pinterest - Vi inspirações para estética e escolhi a paleta de cores.
+
+
+REFERÊNCIAS:
+
+https://github.com/elc117/game-2024b-vmferreira - Analisando o código, consegui compreender bem como funciona um projeto no libGDX.
+
+https://liascript.github.io/course/?https://raw.githubusercontent.com/AndreaInfUFSM/elc117-2025b/main/classes/23/README.md#1 - Conteúdo da disciplina, explica bem os conceitos da POO.
+
+https://libgdx.com/wiki/ - Explicações de cada recurso do libGDX, essencial.
+
+https://www.youtube.com/playlist?list=PLLwCf-qdpyEnB_FO_1HkUFh7smwGNjAaC - Playlist com explicações e demonstrações de funções do libGDX, principal fonte.
+
+https://youtu.be/MkmczZpaWUM?si=T_kqKUUma6T5z5BX - Mostra como criar o diagrama de classes de forma mais simples.
+
+IntelliJ IDE - Comecei a usar essa IDE com esse projeto, foi muito útil, pois já sugere as possíveis correções de erros, facilitando o desenvolvimento.
+
+ChatGpt - Utilizei para sanar dúvidas, sem prompts específicos pois eram perguntas mais gerais sobre o código. Também foi usado na criação do diagrama de classes, organizando os atributos e operações de cada classe.
 
 ---
 
